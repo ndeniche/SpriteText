@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="SpriteText.js"></script>
+    <title>SpriteText Demo</title>
+</head>
+<body>
+    <canvas id="spriteTextCanvas"></canvas>
+    <script type="text/javascript">
+        var initProps = {
+            text: 'Hello world',
+            spritesheets: [
+                './sample/resources/01.png'
+            ],
+            dimensions: [
+                {
+                    a:[0,365,0,528],
+                    b:[365,331,0,528],
+                    c:[696,302,0,528],
+                    d:[998,346,0,528],
+                    e:[1344,310,0,528],
+                    f:[1654,287,0,528],
+                    g:[1941,343,0,528],
+                    h:[0,365,528,1056],
+                    i:[365,178,528,1056],
+                    j:[543,202,528,1056],
+                    k:[745,367,528,1056],
+                    l:[1112,296,528,1056],
+                    m:[1408,344,528,1056],
+                    n:[1752,374,528,1056],
+                    ntilde:[0,366,1056,1584],
+                    o:[366,331,1056,1584],
+                    p:[697,312,1056,1584],
+                    q:[1009,346,1056,1584],
+                    r:[1355,351,1056,1584],
+                    s:[1706,268,1056,1584],
+                    t:[1974,338,1056,1584],
+                    u:[0,349,1584,2112],
+                    v:[349,348,1584,2112],
+                    w:[697,376,1584,2112],
+                    x:[1073,336,1584,2112],
+                    y:[1409,323,1584,2112],
+                    z:[1732,29,1584,2112],
+                }
+            ]
+        };
+        var sprite = new SpriteText('spriteTextCanvas',initProps);
+    </script>
+</body>
+</html>
