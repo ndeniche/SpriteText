@@ -117,6 +117,7 @@ window.SpriteText = function (canvas,initProps) {
         __settings: {},
         __properties: {},
         __iterate: false,
+        __inputText: null,
         __defaults__: {
             whitespaceWidth: 0.5, //em units
             caseSensitive: false,
@@ -147,6 +148,9 @@ window.SpriteText = function (canvas,initProps) {
                 }
                 if(initProps.hasOwnProperty('backgroundImage')) {
                     this.setBackgroundImage(initProps.backgroundImage);
+                }
+                if(initProps.hasOwnProperty('input')) {
+                    this.setInput(initProps.input);
                 }
             }
             this.initSettings(initProps.hasOwnProperty('properties') ? initProps.properties : null);
@@ -250,6 +254,10 @@ window.SpriteText = function (canvas,initProps) {
                 } else {
                     if(canvas instanceof HTMLCanvasElement) {
                         this.__canvas = canvas;
+                        canvas.style.cursor = 'pointer';
+                        canvas.onclick = function() {
+                            __that.reload();
+                        }
                     } else {
                         console.log('Canvas node must be of type canvas.');
                     }
@@ -360,6 +368,13 @@ window.SpriteText = function (canvas,initProps) {
         },
 
         reload: function(text) {
+            if(typeof text === 'undefined') {
+                if(this.__inputText != null) {
+                    text = this.__inputText.value
+                } else {
+                    text = this.getText();
+                }
+            }
             let canvas = this.getCanvas();
             canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
             this.setText(text);
@@ -499,8 +514,21 @@ window.SpriteText = function (canvas,initProps) {
                 x: this.getCanvasWidth() * initialPosition[0],
                 y: this.getCanvasHeight() * initialPosition[1]
             }
+        },
+
+        setInput: function(input) {
+            if(typeof input === "string") {
+                let inputText = document.getElementById(input);
+                this.setInput(inputText)
+            } else if(input instanceof HTMLInputElement) {
+                this.__inputText = input;
+                this.__inputText.onkeyup = function() {__that.reload()};
+                this.setText(this.__inputText.value)
+            } else {
+                Console.error('The input element must be type text.');
+                this.__inputText = null;
+            }
         }
-        // TODO: paint elements onto canvas
     };
 
     return __spriteText.init(canvas,initProps);

@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="SpriteText.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/ndeniche/SpriteText/master/SpriteText.min.js"></script>
     <title>SpriteText Demo</title>
 </head>
 <body>
-    <input type="text" onkeyup="javascript:sprite.reload(this.value)" value="Send Nudes" />
+    <input type="text" id="textInput" value="SpriteText" />
     <canvas id="spriteTextCanvas" width="810" height="200"></canvas>
     <script type="text/javascript">
         var initProps = {
-            text: 'SEND NUDES',
+            input: 'textInput',
             spritesheets: [
                 './sample/resources/01.png',
                 './sample/resources/02.png',
