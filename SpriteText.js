@@ -404,7 +404,7 @@ window.SpriteText = function (canvas,initProps) {
         drawElements: function() {
             let bg = this.getBackgroundImage(),
                 canvas = this.getCanvas(),
-                bgRatio = canvas.width / bg.width;
+                bgRatio = canvas.offsetWidth / bg.width;
             
             canvas.height = bg.height * bgRatio;
 
