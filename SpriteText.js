@@ -127,6 +127,7 @@ window.SpriteText = function (canvas,initProps) {
             fontSize: 80, //pixels
             rotation: 0, //deg
             rotateBoth: true,
+            letterSeparation: 0.1, //em units
         },
         __elements__: [],
         __that: null,
@@ -300,6 +301,12 @@ window.SpriteText = function (canvas,initProps) {
             return this.getSetting('fontSize') / this.getMaxHeight();
         },
 
+        getCanvasRatio: function() {
+            let bg = this.getBackgroundImage();
+            if(typeof bg === 'undefined' || bg == null) return 1;
+            return this.getCanvas().offsetWidth / bg.width;
+        },
+
         getMaxHeight: function() {
             let maxHeight = 0;
             let dims = !this.__iterate ? [this.getDimensions()[0]] : this.getDimensions();
@@ -345,6 +352,11 @@ window.SpriteText = function (canvas,initProps) {
         getSpace: function(ratio) {
             if(typeof ratio === 'undefined' || ratio == null) ratio = 1;
             return this.getTotalHeight() * this.getSetting('whitespaceWidth') * ratio;
+        },
+
+        getLetterSeparation: function() {
+            let s = this.getSetting('letterSeparation');
+            return this.getTotalHeight() * s * this.getCanvasRatio();
         },
 
         clearElements: function() {
@@ -438,7 +450,7 @@ window.SpriteText = function (canvas,initProps) {
 
             let bg = this.getBackgroundImage(),
                 canvas = this.getCanvas(),
-                bgRatio = canvas.offsetWidth / bg.width;
+                bgRatio = this.getCanvasRatio();
             
             canvas.height = bg.height * bgRatio;
 
@@ -451,6 +463,7 @@ window.SpriteText = function (canvas,initProps) {
                                             (hAlign == 'right' ? totalWidth : 0)),
                 top = cip.y - totalHeight / 2,
                 initPos = cip.x - lm * bgRatio,
+                separation = this.getLetterSeparation(),
                 currPos = initPos,
                 hasRotation = this.getSetting('rotation') != 0,
                 el = this.getElements(),
@@ -471,17 +484,17 @@ window.SpriteText = function (canvas,initProps) {
                             h = p.dHeight * bgRatio;
                         if(hasRotation){
                             let rotationAngle = this.getRotationAngle();
-                            ctx.translate(dx + w/2,dy + h/2);
+                            ctx.translate(dx + w/2 + separation/2,dy + h/2);
                             ctx.rotate(rotationAngle);
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
                                 -w/2, -h/2, w, h);
                             ctx.rotate(-rotationAngle);
-                            ctx.translate(-1 * (dx + w/2),-1 * (dy + h/2));
+                            ctx.translate(-1 * (dx + w/2 + separation/2),-1 * (dy + h/2));
                         } else {
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                dx, dy, w, h);
+                                dx + separation/2, dy, w, h);
                         }
-                            currPos += w;
+                            currPos += w + separation;
                         break;
                     }
                     case 'space' : {
@@ -504,7 +517,8 @@ window.SpriteText = function (canvas,initProps) {
         getTotalWidth: function() {
             let w = 0,
                 elements = this.getElements(),
-                whiteSpace = this.getSpace();
+                whiteSpace = this.getSpace(),
+                separation = this.getLetterSeparation();
             for(let i in elements) {
                 switch(elements[i].getType()) {
                     case 'char':
@@ -515,6 +529,7 @@ window.SpriteText = function (canvas,initProps) {
                         break;
                 }
             }
+            w += separation * (elements.length - 1);
             return w;
         },
 
@@ -532,6 +547,7 @@ window.SpriteText = function (canvas,initProps) {
                         break;
                 }
             }
+            w += this.getMaxHeight() * s * (elements.length - 1);
             return w;
         },
 

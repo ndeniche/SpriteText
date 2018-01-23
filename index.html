@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://rawgit.com/ndeniche/SpriteText/master/lib/SpriteText.min.js"></script>
+    <!--<script type="text/javascript" src="https://rawgit.com/ndeniche/SpriteText/master/lib/SpriteText.min.js"></script>-->
+    <script type="text/javascript" src="SpriteText.js"></script>
     <title>SpriteText Demo</title>
 </head>
 <body>
@@ -52,7 +53,9 @@
             backgroundImage: './sample/resources/background.jpg',
             properties: {
                 rotation: 8,
-                initialPosition: [0.5,0.55]
+                initialPosition: [0.5,0.62],
+                fontSize: 120,
+                letterSeparation: 0.05
             }
         };
         var sprite = new SpriteText('spriteTextCanvas',initProps);
