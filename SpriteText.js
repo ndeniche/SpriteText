@@ -468,18 +468,20 @@ window.SpriteText = function (canvas,initProps) {
                             dx = currPos,
                             dy = top + marginTop;
                         if(hasRotation){
-                            let rotationAngle = this.getRotationAngle();
-                            ctx.translate(dx + p.dWidth/2,dy + p.dHeight/2);
+                            let rotationAngle = this.getRotationAngle(),
+                                w = p.dWidth * bgRatio,
+                                h = p.dHeight * bgRatio;
+                            ctx.translate(dx + w/2,dy + h/2);
                             ctx.rotate(rotationAngle);
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                -p.dWidth/2, -p.dHeight/2, p.dWidth * bgRatio, p.dHeight * bgRatio);
+                                -w/2, -p.h/2, w * bgRatio, h * bgRatio);
                             ctx.rotate(-rotationAngle);
-                            ctx.translate(-1 * (dx + p.dWidth/2),-1 * (dy + p.dHeight/2));
+                            ctx.translate(-1 * (dx + w/2),-1 * (dy + h/2));
                         } else {
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                dx, dy, p.dWidth * bgRatio, p.dHeight * bgRatio);
+                                dx, dy, w * bgRatio, h * bgRatio);
                         }
-                            currPos += p.dWidth * bgRatio;
+                            currPos += w * bgRatio;
                         break;
                     }
                     case 'space' : {
