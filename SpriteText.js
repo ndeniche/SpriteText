@@ -466,11 +466,11 @@ window.SpriteText = function (canvas,initProps) {
                             marginTop = vAlign == 'middle' ? eHeight / 2 : 
                                 vAlign == 'bottom' ? eHeight : 0
                             dx = currPos,
-                            dy = top + marginTop;
+                            dy = top + marginTop,
+                            w = p.dWidth * bgRatio,
+                            h = p.dHeight * bgRatio;
                         if(hasRotation){
-                            let rotationAngle = this.getRotationAngle(),
-                                w = p.dWidth * bgRatio,
-                                h = p.dHeight * bgRatio;
+                            let rotationAngle = this.getRotationAngle();
                             ctx.translate(dx + w/2,dy + h/2);
                             ctx.rotate(rotationAngle);
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
