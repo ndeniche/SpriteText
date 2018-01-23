@@ -450,7 +450,7 @@ window.SpriteText = function (canvas,initProps) {
                 lm = (hAlign == 'center' ? (totalWidth / 2) : 
                                             (hAlign == 'right' ? totalWidth : 0)),
                 top = cip.y - totalHeight / 2,
-                initPos = cip.x - lm
+                initPos = cip.x - lm * bgRatio,
                 currPos = initPos,
                 hasRotation = this.getSetting('rotation') != 0,
                 el = this.getElements(),
