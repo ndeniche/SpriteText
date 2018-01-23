@@ -130,6 +130,8 @@ window.SpriteText = function (canvas,initProps) {
         },
         __elements__: [],
         __that: null,
+        __functionBefore: null,
+        __callback: null,
         get: function () {
             return this;
         },
@@ -286,6 +288,14 @@ window.SpriteText = function (canvas,initProps) {
             this.__settings[name] = value;
         },
 
+        setFunctionBeforeDraw: function(func) {
+            this.__functionBefore = func;
+        },
+
+        setCallback: function(func) {
+            this.__callback = func;
+        },
+
         getRatio: function(){
             return this.getSetting('fontSize') / this.getMaxHeight();
         },
@@ -401,7 +411,30 @@ window.SpriteText = function (canvas,initProps) {
             
         },
 
+        getFunctionBeforeDraw: function() {
+            if(typeof this.__functionBefore !== 'undefined' && this.__functionBefore != null) {
+                return this.__functionBefore;
+            } else {
+                return null;
+            }
+        },
+
+        getCallback: function() {
+            if(typeof this.__callback !== 'undefined' && this.__callback != null) {
+                return this.__callback;
+            } else {
+                return null;
+            }
+        },
+
         drawElements: function() {
+            let funcBefore = this.getFunctionBeforeDraw(),
+                callback = this.getCallback();
+            
+            if(funcBefore != null) {
+                funcBefore();
+            }
+
             let bg = this.getBackgroundImage(),
                 canvas = this.getCanvas(),
                 bgRatio = canvas.offsetWidth / bg.width;
@@ -454,6 +487,8 @@ window.SpriteText = function (canvas,initProps) {
                     }
                 }
             }
+
+            if(callback != null) callback();
         },
 
         getRotationAngle: function() {
