@@ -342,8 +342,9 @@ window.SpriteText = function (canvas,initProps) {
             return letter;
         },
 
-        getSpace: function() {
-            return this.getTotalHeight() * this.getSetting('whitespaceWidth');
+        getSpace: function(ratio) {
+            if(typeof ratio === 'undefined' || ratio == null) ratio = 1;
+            return this.getTotalHeight() * this.getSetting('whitespaceWidth') * ratio;
         },
 
         clearElements: function() {
@@ -471,18 +472,18 @@ window.SpriteText = function (canvas,initProps) {
                             ctx.translate(dx + p.dWidth/2,dy + p.dHeight/2);
                             ctx.rotate(rotationAngle);
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                -p.dWidth/2, -p.dHeight/2, p.dWidth, p.dHeight);
+                                -p.dWidth/2, -p.dHeight/2, p.dWidth * bgRatio, p.dHeight * bgRatio);
                             ctx.rotate(-rotationAngle);
                             ctx.translate(-1 * (dx + p.dWidth/2),-1 * (dy + p.dHeight/2));
                         } else {
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                dx, dy, p.dWidth, p.dHeight);
+                                dx, dy, p.dWidth * bgRatio, p.dHeight * bgRatio);
                         }
-                            currPos += p.dWidth;
+                            currPos += p.dWidth * bgRatio;
                         break;
                     }
                     case 'space' : {
-                        currPos += this.getSpace();
+                        currPos += this.getSpace(bgRatio);
                         break;
                     }
                 }
