@@ -474,7 +474,7 @@ window.SpriteText = function (canvas,initProps) {
                             ctx.translate(dx + w/2,dy + h/2);
                             ctx.rotate(rotationAngle);
                             ctx.drawImage(p.image, p.sx, p.sy, p.sWidth, p.sHeight,
-                                -w/2, -p.h/2, w, h);
+                                -w/2, -h/2, w, h);
                             ctx.rotate(-rotationAngle);
                             ctx.translate(-1 * (dx + w/2),-1 * (dy + h/2));
                         } else {
